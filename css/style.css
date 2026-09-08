@@ -181,3 +181,62 @@ footer {
         max-width: 320px;
     }
 }
+
+.localizacao {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #f4f4f4;
+    border-radius: 12px;
+}
+
+.localizacao h2 {
+    margin-bottom: 10px;
+}
+
+.localizacao p {
+    margin-bottom: 15px;
+}
+
+#btn-localizacao {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #dc2626;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#btn-localizacao:hover {
+    opacity: 0.9;
+}
+
+#resultado-localizacao {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+
+    .localizacao {
+        margin: 20px 15px;
+        padding: 15px;
+    }
+
+    #btn-localizacao {
+        width: 100%;
+    }
+
+    .lista-carros {
+        grid-template-columns: 1fr;
+    }
+
+    input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Configuração PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#dc2626">
+
     <title>Catálogo Hot Wheels</title>
 
     <link rel="stylesheet" href="css/style.css">
@@ -40,12 +44,35 @@
         </section>
 
 
+        <!-- Recurso de hardware: Geolocalização -->
+        <section class="localizacao">
+
+            <h2>Minha localização</h2>
+
+            <p>
+                Utilize a geolocalização do dispositivo para visualizar
+                sua posição atual.
+            </p>
+
+            <button id="btn-localizacao" type="button">
+                Usar minha localização
+            </button>
+
+            <p id="resultado-localizacao">
+                Localização ainda não obtida.
+            </p>
+
+        </section>
+
+
         <!-- Catálogo Hot Wheels -->
         <section id="catalogo">
 
             <h2>Catálogo</h2>
 
-            <label for="pesquisa">Pesquisar modelo</label>
+            <label for="pesquisa">
+                Pesquisar modelo
+            </label>
 
             <input
                 type="text"
@@ -198,13 +225,38 @@
     <footer>
 
         <p>
-            Projeto desenvolvido com HTML, CSS, JavaScript e API externa.
+            Projeto desenvolvido com HTML, CSS, JavaScript,
+            API externa e recursos PWA.
         </p>
 
     </footer>
 
 
+    <!-- JavaScript principal -->
     <script src="js/script.js"></script>
+
+    <!-- Geolocalização -->
+    <script src="js/gps.js"></script>
+
+
+    <!-- Registro do Service Worker -->
+    <script>
+        if ("serviceWorker" in navigator) {
+
+            navigator.serviceWorker
+                .register("./service-worker.js")
+                .then(() => {
+                    console.log("Service Worker registrado com sucesso!");
+                })
+                .catch((erro) => {
+                    console.log(
+                        "Erro ao registrar Service Worker:",
+                        erro
+                    );
+                });
+
+        }
+    </script>
 
 </body>
 
