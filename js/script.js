@@ -1,12 +1,15 @@
 const pesquisa = document.getElementById("pesquisa");
 const carros = document.querySelectorAll(".carro");
+const botoesFiltro = document.querySelectorAll(".filtros button");
+
+let categoriaAtual = "todos";
 
 
 // ==========================
-// Pesquisa dos Hot Wheels
+// Pesquisa e filtros Hot Wheels
 // ==========================
 
-pesquisa.addEventListener("input", function () {
+function filtrarCarros() {
 
     const textoPesquisa = pesquisa.value.toLowerCase();
 
@@ -17,11 +20,38 @@ pesquisa.addEventListener("input", function () {
             .textContent
             .toLowerCase();
 
-        if (nomeCarro.includes(textoPesquisa)) {
+        const categoriaCarro = carro.dataset.categoria;
+
+        const nomeCorresponde =
+            nomeCarro.includes(textoPesquisa);
+
+        const categoriaCorresponde =
+            categoriaAtual === "todos" ||
+            categoriaCarro === categoriaAtual;
+
+        if (nomeCorresponde && categoriaCorresponde) {
             carro.style.display = "block";
         } else {
             carro.style.display = "none";
         }
+
+    });
+
+}
+
+
+// Pesquisa pelo nome
+pesquisa.addEventListener("input", filtrarCarros);
+
+
+// Filtro por categoria
+botoesFiltro.forEach(function (botao) {
+
+    botao.addEventListener("click", function () {
+
+        categoriaAtual = botao.dataset.categoria;
+
+        filtrarCarros();
 
     });
 
@@ -35,53 +65,60 @@ pesquisa.addEventListener("input", function () {
 const botaoApi = document.getElementById("carregar-api");
 const resultadoApi = document.getElementById("resultado-api");
 
-botaoApi.addEventListener("click", async function () {
+if (botaoApi && resultadoApi) {
 
-    // Mensagem enquanto os dados são carregados
-    resultadoApi.innerHTML = "<p>Carregando veículos...</p>";
+    botaoApi.addEventListener("click", async function () {
 
-    try {
+        // Mensagem enquanto os dados são carregados
+        resultadoApi.innerHTML =
+            "<p>Carregando veículos...</p>";
 
-        // Requisição para a API
-        const resposta = await fetch(
-            "https://fleetcatalog.disturbingbyte.pt/v1/makes?pageSize=10"
-        );
+        try {
 
-        // Verifica se ocorreu algum erro
-        if (!resposta.ok) {
-            throw new Error("Erro ao carregar os dados da API.");
+            // Requisição para a API
+            const resposta = await fetch(
+                "https://fleetcatalog.disturbingbyte.pt/v1/makes?pageSize=10"
+            );
+
+            // Verifica se ocorreu algum erro
+            if (!resposta.ok) {
+                throw new Error(
+                    "Erro ao carregar os dados da API."
+                );
+            }
+
+            // Converte a resposta para JSON
+            const dados = await resposta.json();
+
+            // Limpa a mensagem de carregamento
+            resultadoApi.innerHTML = "";
+
+            // Cria um card para cada marca recebida
+            dados.items.forEach(function (marca) {
+
+                const card =
+                    document.createElement("article");
+
+                card.classList.add("carro-api");
+
+                card.innerHTML = `
+                    <h3>${marca.name}</h3>
+                    <p>Marca de veículo</p>
+                `;
+
+                resultadoApi.appendChild(card);
+
+            });
+
+        } catch (erro) {
+
+            resultadoApi.innerHTML =
+                "<p>Não foi possível carregar os veículos.</p>";
+
+            console.error("Erro:", erro);
+
         }
 
-        // Converte a resposta para JSON
-        const dados = await resposta.json();
+    });
 
-        // Limpa a mensagem de carregamento
-        resultadoApi.innerHTML = "";
-
-
-        // Cria um card para cada marca recebida
-        dados.items.forEach(function (marca) {
-
-            const card = document.createElement("article");
-
-            card.classList.add("carro-api");
-
-            card.innerHTML = `
-                <h3>${marca.name}</h3>
-                <p>Marca de veículo</p>
-            `;
-
-            resultadoApi.appendChild(card);
-
-        });
-
-    } catch (erro) {
-
-        resultadoApi.innerHTML =
-            "<p>Não foi possível carregar os veículos.</p>";
-
-        console.error("Erro:", erro);
-
-    }
-
-});
+}

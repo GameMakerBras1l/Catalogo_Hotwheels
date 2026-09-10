@@ -27,7 +27,6 @@
         </nav>
     </header>
 
-
     <!-- Conteúdo principal -->
     <main>
 
@@ -43,36 +42,10 @@
 
         </section>
 
-
-        <!-- Recurso de hardware: Geolocalização -->
-        <section class="localizacao">
-
-            <h2>Minha localização</h2>
-
-            <p>
-                Utilize a geolocalização do dispositivo para visualizar
-                sua posição atual.
-            </p>
-
-            <button id="btn-localizacao" type="button">
-                Usar minha localização
-            </button>
-
-            <p id="resultado-localizacao">
-                Localização ainda não obtida.
-            </p>
-
-        </section>
-
-
-        <!-- Catálogo Hot Wheels -->
+        <!-- Catálogo -->
         <section id="catalogo">
 
             <h2>Catálogo</h2>
-
-            <label for="pesquisa">
-                Pesquisar modelo
-            </label>
 
             <input
                 type="text"
@@ -80,146 +53,67 @@
                 placeholder="Pesquisar Hot Wheels..."
             >
 
-            <div class="lista-carros">
+            <!-- Filtros por tipo -->
+            <div class="filtros">
 
-                <!-- Twin Mill -->
-                <article class="carro">
+                <button data-categoria="todos">Todos</button>
 
-                    <a
-                        href="https://hotwheels.fandom.com/wiki/Twin_Mill"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                <button data-categoria="fantasy">Fantasy</button>
 
-                        <img
-                            src="images/twin_mill.jpg"
-                            alt="Hot Wheels Twin Mill"
-                            loading="lazy"
-                        >
+                <button data-categoria="muscle">Muscle</button>
 
-                    </a>
-
-                    <h3>Twin Mill</h3>
-
-                </article>
-
-
-                <!-- Deora II -->
-                <article class="carro">
-
-                    <a
-                        href="https://hotwheels.fandom.com/wiki/Deora_II"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-
-                        <img
-                            src="images/deora_ii.jpg"
-                            alt="Hot Wheels Deora II"
-                            loading="lazy"
-                        >
-
-                    </a>
-
-                    <h3>Deora II</h3>
-
-                </article>
-
-
-                <!-- Muscle and Blown -->
-                <article class="carro">
-
-                    <a
-                        href="https://hotwheels.fandom.com/wiki/Muscle_and_Blown"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-
-                        <img
-                            src="images/muscle_and_blown.jpg"
-                            alt="Hot Wheels Muscle and Blown"
-                            loading="lazy"
-                        >
-
-                    </a>
-
-                    <h3>Muscle and Blown</h3>
-
-                </article>
-
-
-                <!-- Bone Shaker -->
-                <article class="carro">
-
-                    <a
-                        href="https://hotwheels.fandom.com/wiki/Bone_Shaker"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-
-                        <img
-                            src="images/bone_shaker.jpg"
-                            alt="Hot Wheels Bone Shaker"
-                            loading="lazy"
-                        >
-
-                    </a>
-
-                    <h3>Bone Shaker</h3>
-
-                </article>
-
-
-                <!-- GT-Scorcher -->
-                <article class="carro">
-
-                    <a
-                        href="https://hotwheels.fandom.com/wiki/GT-Scorcher"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-
-                        <img
-                            src="images/gt_scorcher.jpg"
-                            alt="Hot Wheels GT-Scorcher"
-                            loading="lazy"
-                        >
-
-                    </a>
-
-                    <h3>GT-Scorcher</h3>
-
-                </article>
+                <button data-categoria="race">Race</button>
 
             </div>
 
-        </section>
+            <!-- Lista de carros -->
+            <div class="lista-carros">
 
+                <div class="carro" data-categoria="fantasy">
+                    <h3>Twin Mill</h3>
+                    <img
+                        src="imagens/Twin-Mill.jpg"
+                        alt="Twin Mill"
+                    >
+                </div>
 
-        <!-- Dados da API -->
-        <section id="api-carros">
+                <div class="carro" data-categoria="fantasy">
+                    <h3>Deora II</h3>
+                    <img
+                        src="imagens/Deora-II.jpg"
+                        alt="Deora II"
+                    >
+                </div>
 
-            <h2>Carros Reais</h2>
+                <div class="carro" data-categoria="muscle">
+                    <h3>Muscle and Blown</h3>
+                    <img
+                        src="imagens/Muscle-and-Blown.jpg"
+                        alt="Muscle and Blown"
+                    >
+                </div>
 
-            <p>
-                Consulte informações de veículos carregadas
-                dinamicamente através de uma API externa.
-            </p>
+                <div class="carro" data-categoria="fantasy">
+                    <h3>Bone Shaker</h3>
+                    <img
+                        src="imagens/Bone-Shaker.jpg"
+                        alt="Bone Shaker"
+                    >
+                </div>
 
-            <button id="carregar-api" type="button">
-                Carregar veículos
-            </button>
-
-            <div id="resultado-api">
-
-                <!-- Os dados da API aparecerão aqui -->
+                <div class="carro" data-categoria="race">
+                    <h3>GT Scorcher</h3>
+                    <img
+                        src="imagens/GT-Scorcher.jpg"
+                        alt="GT Scorcher"
+                    >
+                </div>
 
             </div>
 
         </section>
 
     </main>
-
 
     <!-- Rodapé -->
     <footer>
@@ -231,33 +125,40 @@
 
     </footer>
 
-
     <!-- JavaScript principal -->
     <script src="js/script.js"></script>
 
     <!-- Geolocalização -->
     <script src="js/gps.js"></script>
 
-
     <!-- Registro do Service Worker -->
     <script>
+
         if ("serviceWorker" in navigator) {
 
             navigator.serviceWorker
                 .register("./service-worker.js")
                 .then(() => {
-                    console.log("Service Worker registrado com sucesso!");
+
+                    console.log(
+                        "Service Worker registrado com sucesso!"
+                    );
+
                 })
                 .catch((erro) => {
+
                     console.log(
                         "Erro ao registrar Service Worker:",
                         erro
                     );
+
                 });
 
         }
+
     </script>
 
 </body>
 
 </html>
+
